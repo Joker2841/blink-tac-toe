@@ -10,6 +10,53 @@ function App() {
 
   const [gameState, setGameState] = useState('setup');
   const [playerCategories, setPlayerCategories] = useState({ 1: null, 2: null });
+  const [board, setBoard] = useState(Array(9).fill(null));
+  const [currentPlayer, setCurrentPlayer] = useState(1);
+
+  const getRandomEmoji = (categoryKey) => {
+    const category = emojiCategories[categoryKey];
+    return category.emojis[Math.floor(Math.random() * category.emojis.length)];
+  };
+
+  const handleCellClick = (index) => {
+    if (board[index]) return;
+    
+    const newBoard = [...board];
+    const emoji = getRandomEmoji(playerCategories[currentPlayer]);
+    newBoard[index] = { player: currentPlayer, emoji };
+    
+    setBoard(newBoard);
+    setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+  };
+
+  const GameBoard = () => (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-600 p-4">
+      <div className="max-w-md mx-auto">
+        <h1 className="text-3xl font-bold text-white text-center mb-4">🌟 Blink Tac Toe</h1>
+        
+        <div className="bg-white bg-opacity-10 rounded-2xl p-4 mb-6 text-white text-center">
+          <div className="text-lg font-semibold">Player {currentPlayer}'s Turn</div>
+          <div className="text-sm opacity-80">
+            Category: {emojiCategories[playerCategories[currentPlayer]].name}
+          </div>
+        </div>
+
+        <div className="bg-white bg-opacity-10 rounded-3xl p-6">
+          <div className="grid grid-cols-3 gap-3">
+            {board.map((cell, index) => (
+              <button
+                key={index}
+                onClick={() => handleCellClick(index)}
+                className="aspect-square bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-4xl transition-all hover:bg-opacity-30"
+              >
+                {cell?.emoji}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   const CategorySelection = () => (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center p-4">
@@ -51,7 +98,7 @@ function App() {
     </div>
   );
 
-  return gameState === 'setup' ? <CategorySelection /> : <div>Game Board Coming Soon...</div>;
+  return gameState === 'setup' ? <CategorySelection /> : <GameBoard />;
 }
 
 export default App;
