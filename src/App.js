@@ -12,22 +12,69 @@ function App() {
   const [playerCategories, setPlayerCategories] = useState({ 1: null, 2: null });
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState(1);
-
+  const [gameHistory, setGameHistory] = useState([]);
+  const [winner, setWinner] = useState(null);
+  const [winningLine, setWinningLine] = useState([]);
+  
+  
   const getRandomEmoji = (categoryKey) => {
     const category = emojiCategories[categoryKey];
     return category.emojis[Math.floor(Math.random() * category.emojis.length)];
   };
 
+ 
+  const checkWinner = (boardState) => {
+  const lines = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6] // diagonals
+  ];
+
+  for (let line of lines) {
+    const [a, b, c] = line;
+    if (boardState[a] && boardState[b] && boardState[c]) {
+      if (boardState[a].player === boardState[b].player && 
+          boardState[a].player === boardState[c].player) {
+        return { winner: boardState[a].player, line };
+      }
+    }
+  }
+  return null;
+};
+
+
   const handleCellClick = (index) => {
-    if (board[index]) return;
-    
-    const newBoard = [...board];
-    const emoji = getRandomEmoji(playerCategories[currentPlayer]);
-    newBoard[index] = { player: currentPlayer, emoji };
-    
-    setBoard(newBoard);
-    setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
-  };
+  if (board[index]) return;
+  
+  const newBoard = [...board];
+  const playerHistory = [...gameHistory];
+  const emoji = getRandomEmoji(playerCategories[currentPlayer]);
+  
+  // Add to history
+  playerHistory.push({ player: currentPlayer, index, emoji });
+  
+  // Get current player's emojis on board
+  const currentPlayerEmojis = playerHistory.filter(move => 
+    move.player === currentPlayer && newBoard[move.index]?.player === currentPlayer
+  );
+
+  // Vanishing rule: max 3 emojis per player
+  if (currentPlayerEmojis.length >= 3) {
+    const oldestMove = currentPlayerEmojis[0];
+    if (oldestMove && oldestMove.index !== index) {
+      newBoard[oldestMove.index] = null;
+    }
+  }
+
+  // Place new emoji
+  newBoard[index] = { player: currentPlayer, emoji };
+  
+  setBoard(newBoard);
+  setGameHistory(playerHistory);
+  setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+};
+
+   
 
   const GameBoard = () => (
     <div className="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-600 p-4">
@@ -57,6 +104,13 @@ function App() {
       </div>
     </div>
   );
+  
+  const result = checkWinner(newBoard);
+if (result) {
+  setWinner(result.winner);
+  setWinningLine(result.line);
+  setGameState('gameOver');
+}
 
   const CategorySelection = () => (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center p-4">
