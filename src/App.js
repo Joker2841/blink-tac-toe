@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Play, RotateCcw, HelpCircle, Volume2, VolumeX, Trophy, Star, Coins } from 'lucide-react';
+import { Play, RotateCcw, HelpCircle, Volume2, VolumeX, Trophy, Star, Coins, Skull } from 'lucide-react';
 
 const BlinkTacToe = () => {
   // Emoji categories
@@ -341,17 +341,31 @@ const handleCellClick = (index) => {
 
   // Category selection component
   const CategorySelection = () => (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden flex items-center justify-center p-4">
+      {/* */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 text-6xl text-white animate-pulse">💀</div>
+        <div className="absolute top-32 right-20 text-4xl text-white animate-pulse delay-1000">☠️</div>
+        <div className="absolute bottom-20 left-32 text-5xl text-white animate-pulse delay-500">💀</div>
+        <div className="absolute bottom-40 right-10 text-3xl text-white animate-pulse delay-1500">⚰️</div>
+        <div className="absolute top-1/2 left-1/4 text-4xl text-white animate-pulse delay-2000">👻</div>
+        <div className="absolute top-1/3 right-1/3 text-5xl text-white animate-pulse delay-700">💀</div>
+      </div>
+      
+      <div className="bg-black bg-opacity-80 backdrop-blur-sm border border-gray-600 rounded-3xl shadow-2xl p-8 max-w-2xl w-full relative z-10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">🌟 Blink Tac Toe</h1>
-          <p className="text-gray-600">Choose your emoji categories to start!</p>
+          <h1 className="text-4xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+            <Skull className="text-red-500" size={40} />
+            Blink Tac Toe
+            <Skull className="text-red-500" size={40} />
+          </h1>
+          <p className="text-gray-300">Choose your emoji categories to begin the game...</p>
         </div>
 
         <div className="space-y-6">
           {[1, 2].map(player => (
-            <div key={player} className="border-2 border-gray-200 rounded-2xl p-6">
-              <h3 className="text-xl font-semibold mb-4 text-center">
+            <div key={player} className="border-2 border-gray-600 bg-gray-900 bg-opacity-50 rounded-2xl p-6">
+              <h3 className="text-xl font-semibold mb-4 text-center text-white">
                 Player {player} - Choose Category
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -362,14 +376,14 @@ const handleCellClick = (index) => {
                     disabled={Object.values(playerCategories).includes(key)}
                     className={`p-4 rounded-xl border-2 transition-all duration-200 ${
                       playerCategories[player] === key
-                        ? 'border-blue-500 bg-blue-50 scale-105'
+                        ? 'border-red-500 bg-red-900 bg-opacity-30 scale-105 shadow-lg shadow-red-500/50'
                         : Object.values(playerCategories).includes(key)
-                        ? 'border-gray-300 bg-gray-100 opacity-50 cursor-not-allowed'
-                        : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50'
+                        ? 'border-gray-600 bg-gray-800 opacity-50 cursor-not-allowed'
+                        : 'border-gray-600 bg-gray-800 hover:border-red-400 hover:bg-red-900 hover:bg-opacity-20'
                     }`}
                   >
                     <div className="text-2xl mb-2">{category.emojis[0]}</div>
-                    <div className="font-medium text-sm">{category.name}</div>
+                    <div className="font-medium text-sm text-gray-300">{category.name}</div>
                   </button>
                 ))}
               </div>
@@ -385,7 +399,7 @@ const handleCellClick = (index) => {
               }
             }}
             disabled={!playerCategories[1] || !playerCategories[2]}
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform duration-200 flex items-center gap-2"
+            className="bg-gradient-to-r from-red-600 to-red-800 text-white px-8 py-3 rounded-full font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 transition-transform duration-200 flex items-center gap-2 shadow-lg"
           >
             <Coins size={20} />
             Continue to Coin Toss
@@ -397,22 +411,31 @@ const handleCellClick = (index) => {
 
   // Coin toss component
   const CoinToss = () => (
-    <div className="min-h-screen bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full text-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden flex items-center justify-center p-4">
+      {/* Haunting background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-16 text-8xl text-white animate-pulse">💀</div>
+        <div className="absolute bottom-32 right-24 text-6xl text-white animate-pulse delay-1000">⚰️</div>
+        <div className="absolute top-1/2 right-10 text-7xl text-white animate-pulse delay-500">👻</div>
+      </div>
+      
+      <div className="bg-black bg-opacity-80 backdrop-blur-sm border border-gray-600 rounded-3xl shadow-2xl p-8 max-w-lg w-full text-center relative z-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">🪙 Coin Toss</h1>
-          <p className="text-gray-600">Let's see who goes first!</p>
+          <h1 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+            💀 Coin Toss 💀
+          </h1>
+          <p className="text-gray-300">The spirits will decide who goes first...</p>
         </div>
 
         {/* Player Categories Display */}
         <div className="grid grid-cols-2 gap-4 mb-8">
           {[1, 2].map(player => (
-            <div key={player} className="bg-gray-50 rounded-xl p-4">
-              <div className="font-semibold text-gray-800 mb-2">Player {player}</div>
+            <div key={player} className="bg-gray-900 bg-opacity-50 border border-gray-600 rounded-xl p-4">
+              <div className="font-semibold text-white mb-2">Player {player}</div>
               <div className="text-2xl mb-2">
                 {emojiCategories[playerCategories[player]].emojis.slice(0, 3).join(' ')}
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-400">
                 {emojiCategories[playerCategories[player]].name}
               </div>
             </div>
@@ -421,7 +444,7 @@ const handleCellClick = (index) => {
 
         {/* Coin Display */}
         <div className="mb-8">
-          <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg flex items-center justify-center text-4xl font-bold text-white transition-transform duration-200 ${
+          <div className={`w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-gray-600 to-gray-800 border-4 border-gray-500 shadow-lg flex items-center justify-center text-4xl font-bold text-white transition-transform duration-200 ${
             isFlipping ? 'animate-spin' : ''
           }`}>
             {isFlipping ? '🪙' : tossResult === 'heads' ? '👑' : tossResult === 'tails' ? '⭐' : '🪙'}
@@ -433,10 +456,10 @@ const handleCellClick = (index) => {
           <button
             onClick={handleCoinToss}
             disabled={isFlipping}
-            className={`bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-200 flex items-center gap-2 mx-auto ${
+            className={`bg-gradient-to-r from-red-600 to-red-800 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-200 flex items-center gap-2 mx-auto shadow-lg ${
               isFlipping 
                 ? 'opacity-50 cursor-not-allowed' 
-                : 'hover:scale-105 hover:shadow-lg'
+                : 'hover:scale-105 hover:shadow-xl'
             }`}
           >
             <Coins size={20} />
@@ -444,12 +467,11 @@ const handleCellClick = (index) => {
           </button>
         ) : (
           <div className="space-y-6">
-            <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-6">
-              <div className="text-6xl mb-2">🎉</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">
+            <div className="bg-gradient-to-r from-red-900 to-gray-900 border border-red-600 rounded-2xl p-6">
+              <div className="text-6xl mb-2">🎭</div>
+              <h3 className="text-2xl font-bold text-white mb-2">
                 Player {tossWinner} Goes First!
               </h3>
-              {/* */}
               <div className="text-3xl">
                 {emojiCategories[playerCategories[tossWinner]].emojis[0]}
               </div>
@@ -457,10 +479,10 @@ const handleCellClick = (index) => {
             
             <button
               onClick={() => setGameState('playing')}
-              className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:scale-105 transition-transform duration-200 flex items-center gap-2 mx-auto"
+              className="bg-gradient-to-r from-red-600 to-red-800 text-white px-8 py-3 rounded-full font-semibold text-lg hover:scale-105 transition-transform duration-200 flex items-center gap-2 mx-auto shadow-lg"
             >
               <Play size={20} />
-              Start Game
+              Begin the Game
             </button>
           </div>
         )}
@@ -469,7 +491,7 @@ const handleCellClick = (index) => {
         <div className="mt-6">
           <button
             onClick={() => setGameState('setup')}
-            className="text-gray-500 hover:text-gray-700 underline"
+            className="text-gray-400 hover:text-gray-200 underline"
           >
             ← Back to Category Selection
           </button>
@@ -481,24 +503,24 @@ const handleCellClick = (index) => {
   // Help modal
   const HelpModal = () => (
     showHelp && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-2xl p-6 max-w-lg w-full max-h-screen overflow-y-auto">
+      <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div className="bg-gray-900 border border-gray-600 rounded-2xl p-6 max-w-lg w-full max-h-screen overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-bold">How to Play</h3>
+            <h3 className="text-2xl font-bold text-white">How to Play</h3>
             <button
               onClick={() => setShowHelp(false)}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
+              className="text-gray-400 hover:text-white text-2xl"
             >
               ×
             </button>
           </div>
-          <div className="space-y-4 text-sm">
+          <div className="space-y-4 text-sm text-gray-300">
             <div>
-              <h4 className="font-semibold mb-3 text-lg">🎯 Objective</h4>
+              <h4 className="font-semibold mb-3 text-lg text-white">🎯 Objective</h4>
               <p>Get 3 of your emojis in a row (horizontal, vertical, or diagonal) to win!</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">✨ Special Rules</h4>
+              <h4 className="font-semibold mb-2 text-white">✨ Special Rules</h4>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Each player can only have 3 emojis on the board at once</li>
                 <li>When you place a 4th emoji, your oldest emoji disappears</li>
@@ -507,38 +529,26 @@ const handleCellClick = (index) => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-lg">🪙 Game Setup</h4>
+              <h4 className="font-semibold mb-3 text-lg text-white">🪙 Game Setup</h4>
               <div className="space-y-3">
                 <div>
-                  <p className="font-medium mb-2">1. Choose Categories</p>
-                  <p className="text-sm text-gray-600 ml-4">Each player selects a different emoji category for their pieces</p>
+                  <p className="font-medium mb-2 text-white">1. Choose Categories</p>
+                  <p className="text-sm text-gray-400 ml-4">Each player selects a different emoji category for their pieces</p>
                 </div>
                 
                 <div>
-                  <p className="font-medium mb-2">2. Coin Toss</p>
+                  <p className="font-medium mb-2 text-white">2. Coin Toss</p>
                   <div className="ml-4 space-y-1">
-                    <p className="text-sm text-gray-600">Flip a coin to determine the starting player:</p>
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="flex items-center gap-1">
-                        <span className="text-lg">👑</span>
-                        <span>- Player 1 starts</span>
-                      </span>
-                      <span className="text-gray-400">|</span>
-                      <span className="flex items-center gap-1">
-                        <span className="text-lg">⭐</span>
-                        <span>- Player 2 starts</span>
-                      </span>
-                    </div>
+                    <p className="text-sm text-gray-400">Flip a coin to determine the starting player</p>
                   </div>
                 </div>
                 
                 <div>
-                  <p className="font-medium mb-2">3. Begin Game</p>
-                  <p className="text-sm text-gray-600 ml-4 ">The coin toss winner makes the first move</p>
-                  <h4 className="font-semibold mb-3 text-lg"></h4>
+                  <p className="font-medium mb-2 text-white">3. Begin Game</p>
+                  <p className="text-sm text-gray-400 ml-4">The coin toss winner makes the first move</p>
                 </div>
               </div>
-              <h4 className="font-semibold mb-3 text-lg"> 🎮 Controls</h4>
+              <h4 className="font-semibold mb-3 text-lg text-white mt-4">🎮 Controls</h4>
               <p>Click any empty cell to place your emoji. The game alternates between players automatically.</p>
             </div>
           </div>
@@ -547,17 +557,30 @@ const handleCellClick = (index) => {
     )
   );
 
-  // Game board component
+  // Game board component - continuing from where it was cut off
   const GameBoard = () => (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden p-4">
+      {/*  */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 text-9xl text-white animate-pulse">💀</div>
+        <div className="absolute top-40 right-16 text-7xl text-white animate-pulse delay-1000">⚰️</div>
+        <div className="absolute bottom-20 left-20 text-8xl text-white animate-pulse delay-500">👻</div>
+        <div className="absolute bottom-32 right-32 text-6xl text-white animate-pulse delay-1500">🕷️</div>
+        <div className="absolute top-1/2 left-1/3 text-7xl text-white animate-pulse delay-2000">🦇</div>
+        <div className="absolute top-1/4 right-1/4 text-8xl text-white animate-pulse delay-700">💀</div>
+      </div>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-white">🌟 Blink Tac Toe</h1>
+            <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+              <Skull className="text-red-500" size={32} />
+              Blink Tac Toe
+            </h1>
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className="text-white hover:text-yellow-300 transition-colors"
+              className="text-gray-400 hover:text-white transition-colors"
             >
               {soundEnabled ? <Volume2 size={24} /> : <VolumeX size={24} />}
             </button>
@@ -565,13 +588,13 @@ const handleCellClick = (index) => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowHelp(true)}
-              className="text-white hover:text-yellow-300 transition-colors"
+              className="text-gray-400 hover:text-white transition-colors"
             >
               <HelpCircle size={24} />
             </button>
             <button
               onClick={resetAll}
-              className="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center gap-2"
+              className="bg-red-800 bg-opacity-60 hover:bg-opacity-80 text-white px-4 py-2 rounded-full transition-all duration-200 flex items-center gap-2 border border-red-600"
             >
               <RotateCcw size={16} />
               New Setup
@@ -580,7 +603,7 @@ const handleCellClick = (index) => {
         </div>
 
         {/* Score Board */}
-        <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-4 mb-6">
+        <div className="bg-black bg-opacity-60 backdrop-blur-sm border border-gray-600 rounded-2xl p-4 mb-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
               <div className="text-white">
@@ -596,26 +619,43 @@ const handleCellClick = (index) => {
             </div>
             <div className="text-white text-right">
               <div className="font-semibold mb-1">Current Turn</div>
-              <div className={`text-2xl px-4 py-2 rounded-full ${
-                currentPlayer === 1 ? 'bg-blue-500' : 'bg-pink-500'
+              {/* Enhanced current player indicator */}
+              <div className={`text-2xl px-6 py-3 rounded-full border-2 transition-all duration-300 ${
+                currentPlayer === 1 
+                  ? 'bg-red-600 border-red-400 shadow-lg shadow-red-500/50 animate-pulse' 
+                  : 'bg-blue-600 border-blue-400 shadow-lg shadow-blue-500/50 animate-pulse'
               }`}>
-                Player {currentPlayer}
+                <div className="flex items-center gap-2">
+                  <span>Player {currentPlayer}</span>
+                  <span>{emojiCategories[playerCategories[currentPlayer]]?.emojis[0]}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Category Display */}
+        {/* Player Categories Info */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           {[1, 2].map(player => (
-            <div key={player} className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4">
-              <div className="text-white text-center">
-                <div className="font-semibold mb-2">Player {player}</div>
+            <div 
+              key={player} 
+              className={`bg-black bg-opacity-40 backdrop-blur-sm border rounded-2xl p-4 transition-all duration-300 ${
+                currentPlayer === player 
+                  ? player === 1 
+                    ? 'border-red-500 shadow-lg shadow-red-500/30' 
+                    : 'border-blue-500 shadow-lg shadow-blue-500/30'
+                  : 'border-gray-600'
+              }`}
+            >
+              <div className="text-center">
+                <div className="font-semibold text-white mb-2">Player {player}</div>
                 <div className="text-2xl mb-2">
-                  {emojiCategories[playerCategories[player]].emojis.slice(0, 3).join(' ')}
+                  {playerCategories[player] ? 
+                    emojiCategories[playerCategories[player]].emojis.slice(0, 4).join(' ') 
+                    : ''}
                 </div>
-                <div className="text-sm opacity-80">
-                  {emojiCategories[playerCategories[player]].name}
+                <div className="text-sm text-gray-400">
+                  {playerCategories[player] ? emojiCategories[playerCategories[player]].name : ''}
                 </div>
               </div>
             </div>
@@ -623,56 +663,153 @@ const handleCellClick = (index) => {
         </div>
 
         {/* Game Board */}
-        <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-3xl p-6 mb-6">
-          <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
+        <div className="bg-black bg-opacity-60 backdrop-blur-sm border border-gray-600 rounded-3xl p-6 mb-6">
+          <div className="grid grid-cols-3 gap-4 aspect-square max-w-md mx-auto">
             {board.map((cell, index) => (
               <button
                 key={index}
                 onClick={() => handleCellClick(index)}
-                disabled={gameState !== 'playing' || winner}
-                className={`aspect-square bg-white bg-opacity-20 rounded-2xl flex items-center justify-center text-4xl transition-all duration-300 hover:bg-opacity-30 hover:scale-105 ${
-                  cell?.isNew ? 'animate-bounce' : ''
-                } ${
-                  winningLine.includes(index) ? 'bg-yellow-400 bg-opacity-50 animate-pulse' : ''
-                }`}
+                onMouseEnter={() => playSound('hover')}
+                className={`aspect-square rounded-2xl border-2 text-5xl flex items-center justify-center transition-all duration-300 hover:scale-105 relative overflow-hidden ${
+                  winner && winningLine.includes(index)
+                    ? 'border-yellow-400 bg-yellow-900 bg-opacity-30 shadow-lg shadow-yellow-500/50 animate-pulse'
+                    : cell
+                    ? 'border-gray-500 bg-gray-800 bg-opacity-50'
+                    : 'border-gray-600 bg-gray-900 bg-opacity-30 hover:border-gray-400 hover:bg-gray-800 hover:bg-opacity-50 cursor-pointer'
+                } ${cell?.isNew ? 'animate-bounce' : ''}`}
+                disabled={winner || gameState !== 'playing'}
               >
-                {cell?.emoji}
+                {/* Cell content */}
+                <div className={`transition-all duration-300 ${cell?.isNew ? 'scale-110' : 'scale-100'}`}>
+                  {cell?.emoji}
+                </div>
+                
+                {/* Hover preview for empty cells */}
+                {!cell && !winner && gameState === 'playing' && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-30 transition-opacity duration-200 text-3xl">
+                    {playerCategories[currentPlayer] ? getRandomEmoji(playerCategories[currentPlayer]) : ''}
+                  </div>
+                )}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Game Over */}
+        {/* Game Status */}
         {winner && (
-          <div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-2xl p-8 text-center">
-            <div className="text-6xl mb-4">🎉</div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          <div className="bg-gradient-to-r from-yellow-900 to-orange-900 border border-yellow-600 rounded-3xl p-8 mb-6 text-center">
+            <div className="text-6xl mb-4">🏆</div>
+            <h2 className="text-3xl font-bold text-white mb-4">
               Player {winner} Wins!
             </h2>
-            <div className="flex justify-center gap-4">
+            <div className="text-4xl mb-4">
+              {playerCategories[winner] ? emojiCategories[playerCategories[winner]].emojis[0] : ''}
+            </div>
+            <div className="space-y-4">
               <button
                 onClick={startNewGame}
-                className="bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-200 flex items-center gap-2"
+                className="bg-gradient-to-r from-green-600 to-green-800 text-white px-8 py-3 rounded-full font-semibold text-lg hover:scale-105 transition-transform duration-200 flex items-center gap-2 mx-auto shadow-lg"
               >
                 <Play size={20} />
                 Play Again
               </button>
-              <button
-                onClick={resetAll}
-                className="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-200 flex items-center gap-2"
-              >
-                <RotateCcw size={20} />
-                New Setup
-              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Current Game Info */}
+        {!winner && gameState === 'playing' && (
+          <div className="bg-black bg-opacity-40 backdrop-blur-sm border border-gray-600 rounded-2xl p-4 text-center">
+            <div className="text-gray-300 mb-2">
+              Next emoji will be from: <span className="font-semibold text-white">
+                {playerCategories[currentPlayer] ? emojiCategories[playerCategories[currentPlayer]].name : ''}
+              </span>
+            </div>
+            <div className="text-2xl">
+              {playerCategories[currentPlayer] ? 
+                emojiCategories[playerCategories[currentPlayer]].emojis.join(' ') 
+                : ''}
             </div>
           </div>
         )}
       </div>
 
+      {/* Help Modal */}
       <HelpModal />
     </div>
   );
 
+  // Game Over Screen
+  const GameOverScreen = () => (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 relative overflow-hidden flex items-center justify-center p-4">
+      {/* Celebration background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 text-8xl text-yellow-400 animate-bounce">🎉</div>
+        <div className="absolute bottom-32 right-32 text-6xl text-yellow-400 animate-bounce delay-500">🏆</div>
+        <div className="absolute top-1/2 right-20 text-7xl text-yellow-400 animate-bounce delay-1000">⭐</div>
+        <div className="absolute bottom-20 left-32 text-5xl text-yellow-400 animate-bounce delay-1500">🎊</div>
+      </div>
+      
+      <div className="bg-black bg-opacity-80 backdrop-blur-sm border border-yellow-600 rounded-3xl shadow-2xl p-8 max-w-lg w-full text-center relative z-10">
+        <div className="mb-8">
+          <div className="text-8xl mb-4 animate-pulse">🏆</div>
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Victory!
+          </h1>
+          <h2 className="text-2xl text-yellow-400 mb-6">
+            Player {winner} Wins!
+          </h2>
+          <div className="text-6xl mb-4">
+            {winner && playerCategories[winner] ? emojiCategories[playerCategories[winner]].emojis[0] : ''}
+          </div>
+        </div>
+
+        {/* Final Scores */}
+        <div className="bg-gray-900 bg-opacity-50 border border-gray-600 rounded-2xl p-6 mb-8">
+          <h3 className="text-xl font-semibold text-white mb-4 flex items-center justify-center gap-2">
+            <Trophy size={24} className="text-yellow-400" />
+            Final Scores
+          </h3>
+          <div className="grid grid-cols-2 gap-4">
+            {[1, 2].map(player => (
+              <div key={player} className={`p-4 rounded-xl border-2 ${
+                player === winner 
+                  ? 'border-yellow-500 bg-yellow-900 bg-opacity-30' 
+                  : 'border-gray-600 bg-gray-800 bg-opacity-50'
+              }`}>
+                <div className="text-2xl mb-2">
+                  {playerCategories[player] ? emojiCategories[playerCategories[player]].emojis[0] : ''}
+                </div>
+                <div className="font-semibold text-white">Player {player}</div>
+                <div className="text-2xl font-bold text-white">{scores[player]}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="space-y-4">
+          <button
+            onClick={startNewGame}
+            className="w-full bg-gradient-to-r from-green-600 to-green-800 text-white px-8 py-4 rounded-full font-semibold text-lg hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 shadow-lg"
+          >
+            <Play size={20} />
+            Play Again
+          </button>
+          
+          <button
+            onClick={resetAll}
+            className="w-full bg-gradient-to-r from-red-600 to-red-800 text-white px-8 py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-200 flex items-center justify-center gap-2 shadow-lg"
+          >
+            <RotateCcw size={20} />
+            New Game Setup
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Main render logic
   return (
     <div className="font-sans">
       {gameState === 'setup' && <CategorySelection />}
